@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaGlobe, FaPaintBrush, FaRocket, FaCheckCircle, FaSpinner, FaArrowRight, FaArrowLeft, FaUser, FaBuilding, FaEnvelope, FaPhone, FaLayerGroup, FaPalette, FaClock, FaMoneyBillWave, FaFileAlt, FaStar, FaShoppingCart, FaCreditCard, FaTruck, FaUsersCog, FaBars } from 'react-icons/fa'
 
@@ -6,12 +6,24 @@ export default function Home() {
   const [currentStep, setCurrentStep] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [showSupernova, setShowSupernova] = useState(false)
+  const [showSuccessContent, setShowSuccessContent] = useState(false)
   
   // Input refs
   const nameRef = useRef(null)
   const emailRef = useRef(null)
   const phoneRef = useRef(null)
   const descriptionRef = useRef(null)
+  
+  // Trigger supernova animation when submitted
+  useEffect(() => {
+    if (isSubmitted) {
+      // Start rocket animation
+      setTimeout(() => setShowSupernova(true), 1500)
+      // Show success content after supernova
+      setTimeout(() => setShowSuccessContent(true), 3000)
+    }
+  }, [isSubmitted])
   
   const [formData, setFormData] = useState({
     // Үндсэн мэдээлэл
@@ -406,7 +418,7 @@ export default function Home() {
       
       <div className="space-y-4">
         <div className="relative">
-          <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400" />
+          <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-cyan-400" />
           <input
             ref={nameRef}
             type="text"
@@ -414,25 +426,25 @@ export default function Home() {
             placeholder="Таны нэр *"
             value={formData.name}
             onChange={handleInputChange}
-            className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all"
+            className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all"
             required
           />
         </div>
 
         <div className="relative">
-          <FaBuilding className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400" />
+          <FaBuilding className="absolute left-4 top-1/2 -translate-y-1/2 text-cyan-400" />
           <input
             type="text"
             name="company"
             placeholder="Байгууллагын нэр"
             value={formData.company}
             onChange={handleInputChange}
-            className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all"
+            className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all"
           />
         </div>
 
         <div className="relative">
-          <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400" />
+          <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-cyan-400" />
           <input
             ref={emailRef}
             type="email"
@@ -440,13 +452,13 @@ export default function Home() {
             placeholder="И-мэйл хаяг *"
             value={formData.email}
             onChange={handleInputChange}
-            className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all"
+            className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all"
             required
           />
         </div>
 
         <div className="relative">
-          <FaPhone className="absolute left-4 top-1/2 -translate-y-1/2 text-purple-400" />
+          <FaPhone className="absolute left-4 top-1/2 -translate-y-1/2 text-cyan-400" />
           <input
             ref={phoneRef}
             type="tel"
@@ -454,7 +466,7 @@ export default function Home() {
             placeholder="Утасны дугаар *"
             value={formData.phone}
             onChange={handleInputChange}
-            className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all"
+            className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all"
             required
           />
         </div>
@@ -484,8 +496,8 @@ export default function Home() {
             }}
             className={`p-4 rounded-xl cursor-pointer transition-all ${
               formData.websiteType === type.value
-                ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
             }`}
           >
             <div className="flex items-center gap-3">
@@ -494,18 +506,6 @@ export default function Home() {
             </div>
           </motion.div>
         ))}
-      </div>
-
-      <div className="mt-6">
-        <label className="text-white/70 mb-2 block">Хэдэн хуудастай байх вэ?</label>
-        <input
-          type="text"
-          name="pages"
-          placeholder="Жишээ: 5-10 хуудас"
-          value={formData.pages}
-          onChange={handleInputChange}
-          className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all"
-        />
       </div>
     </motion.div>
   )
@@ -530,8 +530,8 @@ export default function Home() {
             onClick={() => handleFeatureToggle(feature.value)}
             className={`p-3 rounded-xl cursor-pointer transition-all text-center ${
               formData.features.includes(feature.value)
-                ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
             }`}
           >
             <span className="text-white text-sm font-medium">{feature.label}</span>
@@ -563,8 +563,8 @@ export default function Home() {
                 onClick={() => setFormData(prev => ({ ...prev, designStyle: style.value }))}
                 className={`p-4 rounded-xl cursor-pointer transition-all ${
                   formData.designStyle === style.value
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -587,8 +587,8 @@ export default function Home() {
                 onClick={() => setFormData(prev => ({ ...prev, hasLogo: option }))}
                 className={`px-4 py-3 rounded-xl cursor-pointer transition-all ${
                   formData.hasLogo === option
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white font-medium">{option}</span>
@@ -605,7 +605,7 @@ export default function Home() {
             placeholder="Жишээ: Цэнхэр, цагаан өнгө голчлон..."
             value={formData.colorPreference}
             onChange={handleInputChange}
-            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all"
+            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all"
           />
         </div>
       </div>
@@ -633,7 +633,7 @@ export default function Home() {
             placeholder="https://example.com"
             value={formData.exampleSite}
             onChange={handleInputChange}
-            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all"
+            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all"
           />
         </div>
 
@@ -645,7 +645,7 @@ export default function Home() {
             value={formData.categories}
             onChange={handleInputChange}
             rows={2}
-            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all resize-none"
+            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all resize-none"
           />
         </div>
 
@@ -660,8 +660,8 @@ export default function Home() {
                 onClick={() => setFormData(prev => ({ ...prev, hasSubCategory: option }))}
                 className={`px-6 py-3 rounded-xl cursor-pointer transition-all ${
                   formData.hasSubCategory === option
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white font-medium">{option}</span>
@@ -675,7 +675,7 @@ export default function Home() {
               placeholder="Жишээ: Хувцас → Цамц / Өмд / Пальто"
               value={formData.subCategoryExample}
               onChange={handleInputChange}
-              className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all"
+              className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all"
             />
           )}
         </div>
@@ -691,8 +691,8 @@ export default function Home() {
                 onClick={() => handleArrayToggle('productInfo', option.value)}
                 className={`p-3 rounded-xl cursor-pointer transition-all text-center ${
                   formData.productInfo.includes(option.value)
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white text-sm font-medium">{option.label}</span>
@@ -709,7 +709,7 @@ export default function Home() {
             placeholder="Жишээ: 3-5 зураг"
             value={formData.imageCount}
             onChange={handleInputChange}
-            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all"
+            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all"
           />
         </div>
 
@@ -724,8 +724,8 @@ export default function Home() {
                 onClick={() => setFormData(prev => ({ ...prev, hasStock: option }))}
                 className={`px-6 py-3 rounded-xl cursor-pointer transition-all ${
                   formData.hasStock === option
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white font-medium">{option}</span>
@@ -759,8 +759,8 @@ export default function Home() {
                 onClick={() => handleArrayToggle('userFeatures', option.value)}
                 className={`p-3 rounded-xl cursor-pointer transition-all text-center ${
                   formData.userFeatures.includes(option.value)
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white text-sm font-medium">{option.label}</span>
@@ -780,8 +780,8 @@ export default function Home() {
                 onClick={() => setFormData(prev => ({ ...prev, hasSearch: option }))}
                 className={`px-6 py-3 rounded-xl cursor-pointer transition-all ${
                   formData.hasSearch === option
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white font-medium">{option}</span>
@@ -801,8 +801,8 @@ export default function Home() {
                 onClick={() => handleArrayToggle('filterOptions', option.value)}
                 className={`p-3 rounded-xl cursor-pointer transition-all text-center ${
                   formData.filterOptions.includes(option.value)
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white text-sm font-medium">{option.label}</span>
@@ -822,8 +822,8 @@ export default function Home() {
                 onClick={() => setFormData(prev => ({ ...prev, hasWishlist: option }))}
                 className={`px-6 py-3 rounded-xl cursor-pointer transition-all ${
                   formData.hasWishlist === option
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white font-medium">{option}</span>
@@ -857,8 +857,8 @@ export default function Home() {
                 onClick={() => setFormData(prev => ({ ...prev, hasCart: option }))}
                 className={`px-6 py-3 rounded-xl cursor-pointer transition-all ${
                   formData.hasCart === option
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white font-medium">{option}</span>
@@ -878,8 +878,8 @@ export default function Home() {
                 onClick={() => handleArrayToggle('paymentMethods', option.value)}
                 className={`p-3 rounded-xl cursor-pointer transition-all text-center ${
                   formData.paymentMethods.includes(option.value)
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white text-sm font-medium">{option.label}</span>
@@ -899,8 +899,8 @@ export default function Home() {
                 onClick={() => handleArrayToggle('deliveryOptions', option.value)}
                 className={`p-3 rounded-xl cursor-pointer transition-all text-center ${
                   formData.deliveryOptions.includes(option.value)
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white text-sm font-medium">{option.label}</span>
@@ -920,8 +920,8 @@ export default function Home() {
                 onClick={() => handleArrayToggle('orderStatuses', option.value)}
                 className={`p-3 rounded-xl cursor-pointer transition-all text-center ${
                   formData.orderStatuses.includes(option.value)
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white text-sm font-medium">{option.label}</span>
@@ -941,8 +941,8 @@ export default function Home() {
                 onClick={() => handleArrayToggle('orderNotifications', option.value)}
                 className={`p-3 rounded-xl cursor-pointer transition-all text-center ${
                   formData.orderNotifications.includes(option.value)
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white text-sm font-medium">{option.label}</span>
@@ -976,8 +976,8 @@ export default function Home() {
                 onClick={() => handleArrayToggle('adminFeatures', option.value)}
                 className={`p-3 rounded-xl cursor-pointer transition-all text-center ${
                   formData.adminFeatures.includes(option.value)
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white text-sm font-medium">{option.label}</span>
@@ -994,7 +994,7 @@ export default function Home() {
             placeholder="Жишээ: 2-3 admin"
             value={formData.adminCount}
             onChange={handleInputChange}
-            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all"
+            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all"
           />
         </div>
 
@@ -1009,8 +1009,8 @@ export default function Home() {
                 onClick={() => handleArrayToggle('adminManages', option.value)}
                 className={`p-3 rounded-xl cursor-pointer transition-all text-center ${
                   formData.adminManages.includes(option.value)
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white text-sm font-medium">{option.label}</span>
@@ -1030,8 +1030,8 @@ export default function Home() {
                 onClick={() => handleArrayToggle('functionalFeatures', option.value)}
                 className={`p-3 rounded-xl cursor-pointer transition-all text-center ${
                   formData.functionalFeatures.includes(option.value)
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white text-sm font-medium">{option.label}</span>
@@ -1062,7 +1062,7 @@ export default function Home() {
             placeholder="Жишээ: Цэнхэр, Ягаан, Хар гэх мэт..."
             value={formData.primaryColor}
             onChange={handleInputChange}
-            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all"
+            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all"
           />
         </div>
 
@@ -1077,8 +1077,8 @@ export default function Home() {
                 onClick={() => setFormData(prev => ({ ...prev, hasBrandAssets: option }))}
                 className={`px-4 py-3 rounded-xl cursor-pointer transition-all ${
                   formData.hasBrandAssets === option
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white font-medium">{option}</span>
@@ -1098,8 +1098,8 @@ export default function Home() {
                 onClick={() => setFormData(prev => ({ ...prev, designPreference: style.value }))}
                 className={`p-4 rounded-xl cursor-pointer transition-all ${
                   formData.designPreference === style.value
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -1122,8 +1122,8 @@ export default function Home() {
                 onClick={() => setFormData(prev => ({ ...prev, isResponsive: option }))}
                 className={`px-6 py-3 rounded-xl cursor-pointer transition-all ${
                   formData.isResponsive === option
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white font-medium">{option}</span>
@@ -1143,8 +1143,8 @@ export default function Home() {
                 onClick={() => handleArrayToggle('languages', option.value)}
                 className={`p-3 rounded-xl cursor-pointer transition-all text-center ${
                   formData.languages.includes(option.value)
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white text-sm font-medium">{option.label}</span>
@@ -1175,7 +1175,7 @@ export default function Home() {
             value={formData.headerItems}
             onChange={handleInputChange}
             rows={3}
-            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all resize-none"
+            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all resize-none"
           />
         </div>
 
@@ -1190,8 +1190,8 @@ export default function Home() {
                 onClick={() => setFormData(prev => ({ ...prev, hasDropdownMenu: option }))}
                 className={`px-6 py-3 rounded-xl cursor-pointer transition-all ${
                   formData.hasDropdownMenu === option
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white font-medium">{option}</span>
@@ -1208,7 +1208,7 @@ export default function Home() {
             value={formData.footerSections}
             onChange={handleInputChange}
             rows={3}
-            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all resize-none"
+            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all resize-none"
           />
         </div>
 
@@ -1220,7 +1220,7 @@ export default function Home() {
             placeholder="https://example.com"
             value={formData.reference}
             onChange={handleInputChange}
-            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all"
+            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all"
           />
         </div>
       </div>
@@ -1252,8 +1252,8 @@ export default function Home() {
                 onClick={() => setFormData(prev => ({ ...prev, timeline: time.value }))}
                 className={`p-4 rounded-xl cursor-pointer transition-all ${
                   formData.timeline === time.value
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -1279,8 +1279,8 @@ export default function Home() {
                 onClick={() => setFormData(prev => ({ ...prev, budget: budget.value }))}
                 className={`p-4 rounded-xl cursor-pointer transition-all ${
                   formData.budget === budget.value
-                    ? 'bg-gradient-to-r from-purple-600 to-pink-600 border-transparent'
-                    : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+                    ? 'bg-gradient-to-r from-blue-600 to-cyan-500 border-transparent'
+                    : 'bg-white/5 border border-white/10 hover:border-cyan-500/50'
                 }`}
               >
                 <span className="text-white font-medium">{budget.label}</span>
@@ -1312,7 +1312,7 @@ export default function Home() {
             value={formData.description}
             onChange={handleInputChange}
             rows={5}
-            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all resize-none"
+            className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all resize-none"
           />
         </div>
 
@@ -1325,7 +1325,7 @@ export default function Home() {
               value={formData.reference}
               onChange={handleInputChange}
               rows={3}
-              className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 input-glow transition-all resize-none"
+              className="w-full px-4 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 input-glow transition-all resize-none"
             />
           </div>
         )}
@@ -1335,59 +1335,270 @@ export default function Home() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="glass rounded-3xl p-12 text-center max-w-md"
-        >
+      <div className="min-h-screen space-bg flex items-center justify-center p-4 relative overflow-hidden">
+        {/* Space Elements */}
+        <div className="stars stars-small"></div>
+        <div className="stars stars-medium"></div>
+        <div className="stars stars-large"></div>
+        <div className="nebula nebula-1"></div>
+        <div className="nebula nebula-2"></div>
+        
+        {/* Rocket Flying Toward Screen */}
+        {!showSupernova && (
           <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: 'spring' }}
-            className="w-24 h-24 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6"
+            initial={{ scale: 0.1, y: 200, opacity: 0 }}
+            animate={{ scale: 15, y: -100, opacity: [0, 1, 1, 0] }}
+            transition={{ duration: 1.5, ease: "easeIn" }}
+            className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none"
           >
-            <FaCheckCircle className="text-white text-5xl" />
+            <span className="text-6xl" style={{ transform: 'rotate(45deg)' }}>🚀</span>
           </motion.div>
-          <h2 className="text-3xl font-bold text-white mb-4">Баярлалаа! 🎉</h2>
-          <p className="text-white/70 mb-6">
-            Таны хүсэлтийг амжилттай хүлээн авлаа. Бид тантай удахгүй холбогдох болно.
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              setIsSubmitted(false)
-              setCurrentStep(0)
-              setFormData({
-                name: '', company: '', email: '', phone: '', websiteType: '', pages: '',
-                features: [], designStyle: '', hasLogo: '', colorPreference: '',
-                timeline: '', budget: '', description: '', reference: '',
-                exampleSite: '', categories: '', hasSubCategory: '', subCategoryExample: '',
-                productInfo: [], imageCount: '', hasStock: '',
-                userFeatures: [], hasSearch: '', filterOptions: [], hasWishlist: '',
-                hasCart: '', paymentMethods: [], deliveryOptions: [], orderStatuses: [], orderNotifications: [],
-                adminFeatures: [], adminCount: '', adminManages: [],
-                functionalFeatures: [], hasComments: '', hasFileUpload: '',
-                primaryColor: '', hasBrandAssets: '', designPreference: '', isResponsive: '', languages: [],
-                headerItems: '', hasDropdownMenu: '', footerSections: ''
-              })
-            }}
-            className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold"
-          >
-            Шинэ хүсэлт илгээх
-          </motion.button>
-        </motion.div>
+        )}
+
+        {/* Supernova Explosion - Neon Cyan/Blue */}
+        {showSupernova && !showSuccessContent && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+            {/* Screen flash */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0] }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0 bg-cyan-400"
+            />
+            
+            {/* Core explosion - Neon Cyan */}
+            <motion.div
+              initial={{ scale: 0, opacity: 1 }}
+              animate={{ scale: [0, 2, 6], opacity: [1, 1, 0] }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="absolute w-40 h-40 rounded-full"
+              style={{
+                background: 'radial-gradient(circle, #fff 0%, #00ffff 15%, #00bcd4 30%, #0099ff 50%, #0066ff 70%, transparent 85%)',
+                boxShadow: '0 0 60px #00ffff, 0 0 120px #00bcd4, 0 0 180px #0099ff, 0 0 240px #00ffff, 0 0 300px #fff'
+              }}
+            />
+            
+            {/* Secondary pulse ring */}
+            <motion.div
+              initial={{ scale: 0, opacity: 1 }}
+              animate={{ scale: [0, 4, 12], opacity: [0.8, 0.5, 0] }}
+              transition={{ duration: 1.5, delay: 0.1, ease: "easeOut" }}
+              className="absolute w-32 h-32 rounded-full border-4 border-cyan-300"
+              style={{
+                boxShadow: '0 0 40px #00ffff, inset 0 0 40px #00ffff'
+              }}
+            />
+            
+            {/* Third pulse ring */}
+            <motion.div
+              initial={{ scale: 0, opacity: 1 }}
+              animate={{ scale: [0, 6, 18], opacity: [0.6, 0.3, 0] }}
+              transition={{ duration: 1.8, delay: 0.2, ease: "easeOut" }}
+              className="absolute w-24 h-24 rounded-full border-2 border-blue-400"
+              style={{
+                boxShadow: '0 0 30px #0099ff'
+              }}
+            />
+
+            {/* Neon particle rings */}
+            {[...Array(16)].map((_, i) => (
+              <motion.div
+                key={i}
+                initial={{ x: 0, y: 0, scale: 1, opacity: 1 }}
+                animate={{ 
+                  x: Math.cos(i * 22.5 * Math.PI / 180) * 400,
+                  y: Math.sin(i * 22.5 * Math.PI / 180) * 400,
+                  scale: [1, 0.5],
+                  opacity: [1, 0]
+                }}
+                transition={{ duration: 1.2, delay: i * 0.02, ease: "easeOut" }}
+                className="absolute w-3 h-3 rounded-full"
+                style={{
+                  background: i % 3 === 0 ? '#00ffff' : i % 3 === 1 ? '#ff00ff' : '#00ff88',
+                  boxShadow: `0 0 20px ${i % 3 === 0 ? '#00ffff' : i % 3 === 1 ? '#ff00ff' : '#00ff88'}, 0 0 40px ${i % 3 === 0 ? '#00ffff' : i % 3 === 1 ? '#ff00ff' : '#00ff88'}`
+                }}
+              />
+            ))}
+
+            {/* Starburst neon lines */}
+            {[...Array(24)].map((_, i) => (
+              <motion.div
+                key={`line-${i}`}
+                initial={{ scaleX: 0, opacity: 1 }}
+                animate={{ scaleX: [0, 1, 1.5], opacity: [1, 1, 0] }}
+                transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+                className="absolute h-1 origin-center"
+                style={{
+                  width: '300px',
+                  background: i % 2 === 0 
+                    ? 'linear-gradient(to right, transparent, #00ffff, #fff, #00ffff, transparent)' 
+                    : 'linear-gradient(to right, transparent, #ff00ff, #fff, #ff00ff, transparent)',
+                  transform: `rotate(${i * 15}deg)`,
+                  boxShadow: i % 2 === 0 ? '0 0 10px #00ffff' : '0 0 10px #ff00ff'
+                }}
+              />
+            ))}
+
+            {/* Sparkle emojis flying out */}
+            {[...Array(12)].map((_, i) => (
+              <motion.span
+                key={`spark-${i}`}
+                initial={{ x: 0, y: 0, scale: 0, opacity: 1, rotate: 0 }}
+                animate={{ 
+                  x: Math.cos(i * 30 * Math.PI / 180) * 300,
+                  y: Math.sin(i * 30 * Math.PI / 180) * 300,
+                  scale: [0, 1.5, 0],
+                  opacity: [0, 1, 0],
+                  rotate: 360
+                }}
+                transition={{ duration: 1.5, delay: 0.2 + i * 0.05, ease: "easeOut" }}
+                className="absolute text-2xl"
+              >
+                {i % 3 === 0 ? '✨' : i % 3 === 1 ? '💫' : '⭐'}
+              </motion.span>
+            ))}
+          </div>
+        )}
+
+        {/* Success Content */}
+        <AnimatePresence>
+          {showSuccessContent && (
+            <motion.div
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: 'spring', damping: 15, stiffness: 200 }}
+              className="glass rounded-3xl p-12 text-center max-w-md relative z-10"
+            >
+              {/* Glowing success icon */}
+              <motion.div
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ delay: 0.2, type: 'spring', damping: 10 }}
+                className="relative mx-auto mb-6"
+              >
+                <div className="w-28 h-28 rounded-full flex items-center justify-center mx-auto relative">
+                  {/* Animated rings */}
+                  <motion.div
+                    animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0.2, 0.5] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="absolute inset-0 rounded-full border-4 border-cyan-400"
+                  />
+                  <motion.div
+                    animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0.1, 0.3] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+                    className="absolute inset-0 rounded-full border-2 border-cyan-300"
+                  />
+                  <div className="w-24 h-24 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center success-glow">
+                    <FaCheckCircle className="text-white text-5xl" />
+                  </div>
+                </div>
+                {/* Sparkles */}
+                {[...Array(6)].map((_, i) => (
+                  <motion.span
+                    key={i}
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: [0, 1, 0], opacity: [0, 1, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.3 }}
+                    className="absolute text-xl"
+                    style={{
+                      top: `${20 + Math.sin(i * 60 * Math.PI / 180) * 50}%`,
+                      left: `${50 + Math.cos(i * 60 * Math.PI / 180) * 60}%`,
+                    }}
+                  >
+                    ✨
+                  </motion.span>
+                ))}
+              </motion.div>
+              
+              <motion.h2
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="text-3xl font-bold text-white mb-2"
+              >
+                Амжилттай! 🎉
+              </motion.h2>
+              <motion.p
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="text-cyan-300 text-lg mb-4"
+              >
+                Таны хүсэлт сансарт хүрлээ!
+              </motion.p>
+              <motion.p
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="text-white/60 mb-8"
+              >
+                Бид тантай удахгүй холбогдох болно ✨
+              </motion.p>
+              
+              <motion.button
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.7 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  setIsSubmitted(false)
+                  setShowSupernova(false)
+                  setShowSuccessContent(false)
+                  setCurrentStep(0)
+                  setFormData({
+                    name: '', company: '', email: '', phone: '', websiteType: '', pages: '',
+                    features: [], designStyle: '', hasLogo: '', colorPreference: '',
+                    timeline: '', budget: '', description: '', reference: '',
+                    exampleSite: '', categories: '', hasSubCategory: '', subCategoryExample: '',
+                    productInfo: [], imageCount: '', hasStock: '',
+                    userFeatures: [], hasSearch: '', filterOptions: [], hasWishlist: '',
+                    hasCart: '', paymentMethods: [], deliveryOptions: [], orderStatuses: [], orderNotifications: [],
+                    adminFeatures: [], adminCount: '', adminManages: [],
+                    functionalFeatures: [], hasComments: '', hasFileUpload: '',
+                    primaryColor: '', hasBrandAssets: '', designPreference: '', isResponsive: '', languages: [],
+                    headerItems: '', hasDropdownMenu: '', footerSections: ''
+                  })
+                }}
+                className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-xl font-semibold btn-glow flex items-center gap-2 mx-auto"
+              >
+                <span>🛸</span> Шинэ хүсэлт илгээх
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Animated background blobs */}
-      <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-      <div className="absolute top-0 -right-4 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+    <div className="min-h-screen space-bg relative overflow-hidden">
+      {/* Space Background Elements */}
+      <div className="stars stars-small"></div>
+      <div className="stars stars-medium"></div>
+      <div className="stars stars-large"></div>
+      
+      {/* Nebula Effects */}
+      <div className="nebula nebula-1"></div>
+      <div className="nebula nebula-2"></div>
+      <div className="nebula nebula-3"></div>
+      
+      {/* Meteors */}
+      <div className="meteor meteor-1"></div>
+      <div className="meteor meteor-2"></div>
+      <div className="meteor meteor-3"></div>
+      
+      {/* Planets */}
+      <div className="planet planet-1"></div>
+      <div className="planet planet-2"></div>
+      <div className="planet planet-saturn"></div>
+      
+      {/* Orbit Rings */}
+      <div className="orbit-ring orbit-ring-1"></div>
+      <div className="orbit-ring orbit-ring-2"></div>
+      
+      {/* Aurora Effect */}
+      <div className="aurora"></div>
 
       <div className="relative z-10 container mx-auto px-4 py-8 md:py-16">
         {/* Header */}
@@ -1397,45 +1608,42 @@ export default function Home() {
           className="text-center mb-12"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <FaGlobe className="text-4xl text-purple-400" />
             <h1 className="text-4xl md:text-5xl font-bold gradient-text">
               Вебсайт Захиалга
             </h1>
           </div>
           <p className="text-white/60 text-lg max-w-2xl mx-auto">
-            Таны бизнест зориулсан мэргэжлийн вебсайт бүтээх хүсэлт илгээнэ үү
+            Сансрын аялалд тавтай морил! Таны бизнест зориулсан мэргэжлийн вебсайт бүтээцгээе ✨
           </p>
         </motion.div>
 
-        {/* Progress Steps */}
-        <div className="max-w-5xl mx-auto mb-8 overflow-x-auto pb-4">
-          <div className="flex justify-between items-center min-w-max px-4">
-            {steps.map((step, index) => (
-              <div key={index} className="flex flex-col items-center relative">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: index * 0.05 }}
-                  onClick={() => setCurrentStep(index)}
-                  className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all cursor-pointer ${
-                    index <= currentStep
-                      ? 'bg-gradient-to-r from-purple-600 to-pink-600'
-                      : 'bg-white/10'
-                  }`}
-                >
-                  <step.icon className={`text-sm md:text-lg ${index <= currentStep ? 'text-white' : 'text-white/40'}`} />
-                </motion.div>
-                <span className={`hidden md:block text-xs mt-2 whitespace-nowrap ${index <= currentStep ? 'text-white' : 'text-white/40'}`}>
-                  {step.title}
-                </span>
-                {index < steps.length - 1 && (
-                  <div className={`absolute top-5 left-full w-full h-0.5 -translate-y-1/2 ${
-                    index < currentStep ? 'bg-gradient-to-r from-purple-600 to-pink-600' : 'bg-white/10'
-                  }`} style={{ width: 'calc(100% - 2rem)', minWidth: '40px' }} />
-                )}
-              </div>
-            ))}
+        {/* Progress Bar with Rocket */}
+        <div className="max-w-2xl mx-auto mb-8 px-4">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-cyan-300 text-sm font-medium">Алхам {currentStep + 1} / {steps.length}</span>
+            <span className="text-cyan-300 text-sm font-medium">{Math.round(((currentStep + 1) / steps.length) * 100)}%</span>
           </div>
+          <div className="relative h-4 bg-white/10 rounded-full overflow-visible">
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="h-full bg-gradient-to-r from-blue-600 to-cyan-400 rounded-full relative"
+            >
+              {/* Rocket with Fire Effect */}
+              <div className="absolute -right-6 top-1/2 -translate-y-1/2 flex items-center">
+                {/* Fire/Flame Effect */}
+                <div className="flame-container">
+                  <div className="flame flame-1"></div>
+                  <div className="flame flame-2"></div>
+                  <div className="flame flame-3"></div>
+                </div>
+                {/* Rocket pointing right → */}
+                <span className="text-2xl relative z-10 rocket-glow" style={{ transform: 'rotate(45deg)' }}>🚀</span>
+              </div>
+            </motion.div>
+          </div>
+          <p className="text-white/50 text-xs mt-2 text-center">{steps[currentStep]?.title}</p>
         </div>
 
         {/* Form */}
@@ -1459,7 +1667,7 @@ export default function Home() {
                 className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all ${
                   currentStep === 0
                     ? 'opacity-0 pointer-events-none'
-                    : 'bg-white/10 text-white hover:bg-white/20'
+                    : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
                 }`}
               >
                 <FaArrowLeft /> Өмнөх
@@ -1471,7 +1679,7 @@ export default function Home() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   disabled={isSubmitting}
-                  className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold btn-glow"
+                  className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-xl font-semibold btn-glow"
                 >
                   {isSubmitting ? (
                     <>
@@ -1479,7 +1687,7 @@ export default function Home() {
                     </>
                   ) : (
                     <>
-                      <FaRocket /> Илгээх
+                      <FaRocket className="rocket-icon" /> Илгээх
                     </>
                   )}
                 </motion.button>
@@ -1489,7 +1697,7 @@ export default function Home() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={nextStep}
-                  className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-semibold btn-glow"
+                  className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-xl font-semibold btn-glow"
                 >
                   Дараах <FaArrowRight />
                 </motion.button>
@@ -1503,7 +1711,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="text-center mt-12 text-white/40 text-sm"
+          className="text-center mt-12 text-cyan-300/40 text-sm"
         >
           <p>© 2026 Вебсайт Захиалга | Бүх эрх хуулиар хамгаалагдсан</p>
         </motion.div>

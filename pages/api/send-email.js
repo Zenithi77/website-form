@@ -358,42 +358,131 @@ ${getArrayText(data.features, featureLabels)}
 `;
   }
 
-  // Create email content
+  // Create email content - Space Theme
   const emailContent = `
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
-    .container { max-width: 700px; margin: 0 auto; }
-    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 30px; text-align: center; }
-    .header h1 { margin: 0; font-size: 28px; }
-    .header p { margin: 10px 0 0; opacity: 0.9; }
-    .type-badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 25px; margin-top: 15px; font-weight: 600; }
-    .content { background: #f8fafc; padding: 30px; }
-    .section { background: white; padding: 25px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .section-title { color: #667eea; font-size: 18px; font-weight: 600; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #667eea; display: flex; align-items: center; gap: 10px; }
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      line-height: 1.6; 
+      color: #e0e0e0; 
+      margin: 0; 
+      padding: 0; 
+      background: #0a0a0f;
+    }
+    .container { max-width: 700px; margin: 0 auto; background: #0d1117; }
+    .header { 
+      background: linear-gradient(135deg, #0d47a1 0%, #1565c0 50%, #0d47a1 100%);
+      color: white; 
+      padding: 50px 30px; 
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(2px 2px at 20px 30px, white, transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, white, transparent),
+        radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 160px 30px, white, transparent);
+      background-size: 200px 100px;
+      opacity: 0.5;
+    }
+    .header h1 { margin: 0; font-size: 28px; position: relative; z-index: 1; }
+    .header p { margin: 10px 0 0; opacity: 0.9; position: relative; z-index: 1; }
+    .rocket-emoji { font-size: 48px; display: block; margin-bottom: 15px; }
+    .type-badge { 
+      display: inline-block; 
+      background: rgba(100, 181, 246, 0.3);
+      border: 1px solid rgba(100, 181, 246, 0.5);
+      padding: 10px 25px; 
+      border-radius: 30px; 
+      margin-top: 20px; 
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+    .content { background: #0d1117; padding: 30px; }
+    .section { 
+      background: linear-gradient(135deg, rgba(15, 20, 40, 0.8) 0%, rgba(20, 30, 50, 0.6) 100%);
+      border: 1px solid rgba(100, 150, 255, 0.15);
+      padding: 25px; 
+      border-radius: 16px; 
+      margin-bottom: 20px; 
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    .section-title { 
+      color: #64b5f6; 
+      font-size: 18px; 
+      font-weight: 600; 
+      margin-bottom: 20px; 
+      padding-bottom: 12px; 
+      border-bottom: 2px solid rgba(100, 181, 246, 0.3);
+      display: flex; 
+      align-items: center; 
+      gap: 10px; 
+    }
     .field { margin-bottom: 12px; display: flex; flex-wrap: wrap; }
-    .label { font-weight: 600; color: #64748b; min-width: 160px; }
-    .value { color: #1e293b; flex: 1; }
+    .label { font-weight: 600; color: #90caf9; min-width: 160px; }
+    .value { color: #e0e0e0; flex: 1; }
     .features-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-    .feature-tag { background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%); color: #667eea; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
-    .description-box { background: #f1f5f9; padding: 20px; border-radius: 8px; margin-top: 10px; white-space: pre-wrap; }
-    .footer { text-align: center; padding: 25px; color: #64748b; font-size: 13px; }
-    .highlight { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 3px 10px; border-radius: 4px; font-weight: 500; }
+    .feature-tag { 
+      background: linear-gradient(135deg, rgba(13, 71, 161, 0.4) 0%, rgba(21, 101, 192, 0.3) 100%);
+      border: 1px solid rgba(100, 181, 246, 0.3);
+      color: #90caf9; 
+      padding: 6px 14px; 
+      border-radius: 20px; 
+      font-size: 13px; 
+      font-weight: 500; 
+    }
+    .description-box { 
+      background: rgba(10, 15, 30, 0.6); 
+      border: 1px solid rgba(100, 150, 255, 0.1);
+      padding: 20px; 
+      border-radius: 12px; 
+      margin-top: 10px; 
+      white-space: pre-wrap; 
+      color: #b0bec5;
+    }
+    .footer { 
+      text-align: center; 
+      padding: 30px; 
+      color: rgba(100, 181, 246, 0.6); 
+      font-size: 13px;
+      border-top: 1px solid rgba(100, 150, 255, 0.1);
+    }
+    .highlight { 
+      background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%); 
+      color: white; 
+      padding: 4px 12px; 
+      border-radius: 6px; 
+      font-weight: 500; 
+    }
+    .planet { display: inline-block; font-size: 24px; }
+    .stars { color: #ffd700; }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>🚀 Шинэ вебсайт захиалга!</h1>
-      <p>Шинэ үйлчлүүлэгчээс захиалга ирлээ</p>
-      <div class="type-badge">${isEcommerce ? '🛒 И-коммерс' : websiteTypeLabels[data.websiteType] || data.websiteType}</div>
+      <span class="rocket-emoji">🚀</span>
+      <h1>Шинэ вебсайт захиалга!</h1>
+      <p>✨ Шинэ үйлчлүүлэгчээс захиалга ирлээ ✨</p>
+      <div class="type-badge">${isEcommerce ? '🛒 И-коммерс дэлгүүр' : websiteTypeLabels[data.websiteType] || data.websiteType}</div>
     </div>
     <div class="content">
       <div class="section">
-        <div class="section-title">👤 Үйлчлүүлэгчийн мэдээлэл</div>
+        <div class="section-title">🧑‍🚀 Үйлчлүүлэгчийн мэдээлэл</div>
         <div class="field"><span class="label">Нэр:</span> <span class="value">${data.name || 'Тодорхойгүй'}</span></div>
         <div class="field"><span class="label">Байгууллага:</span> <span class="value">${data.company || 'Тодорхойгүй'}</span></div>
         <div class="field"><span class="label">Имэйл:</span> <span class="value">${data.email || 'Тодорхойгүй'}</span></div>
@@ -401,9 +490,8 @@ ${getArrayText(data.features, featureLabels)}
       </div>
       
       <div class="section">
-        <div class="section-title">📋 Үндсэн мэдээлэл</div>
+        <div class="section-title">🌍 Үндсэн мэдээлэл</div>
         <div class="field"><span class="label">Вебсайтын төрөл:</span> <span class="value">${websiteTypeLabels[data.websiteType] || data.websiteType || 'Тодорхойгүй'}</span></div>
-        <div class="field"><span class="label">Хуудасны тоо:</span> <span class="value">${data.pages || 'Тодорхойгүй'}</span></div>
         <div class="field"><span class="label">Хугацаа:</span> <span class="value"><span class="highlight">${timelineLabels[data.timeline] || data.timeline || 'Тодорхойгүй'}</span></span></div>
         <div class="field"><span class="label">Төсөв:</span> <span class="value"><span class="highlight">${budgetLabels[data.budget] || data.budget || 'Тодорхойгүй'}</span></span></div>
       </div>
@@ -418,8 +506,8 @@ ${getArrayText(data.features, featureLabels)}
       </div>
     </div>
     <div class="footer">
-      <p>Энэ мэйл автоматаар илгээгдсэн болно.</p>
-      <p>© 2026 Web Development</p>
+      <p>🌟 Энэ мэйл автоматаар илгээгдсэн болно 🌟</p>
+      <p>© 2026 Вебсайт Захиалга</p>
     </div>
   </div>
 </body>
@@ -428,32 +516,33 @@ ${getArrayText(data.features, featureLabels)}
 
   // Plain text version
   const textContent = `
-ШИНЭ ВЕБСАЙТ ЗАХИАЛГА
-=====================
+🚀 ШИНЭ ВЕБСАЙТ ЗАХИАЛГА 🚀
+============================
 Төрөл: ${isEcommerce ? '🛒 И-коммерс' : websiteTypeLabels[data.websiteType] || data.websiteType}
 
-ҮЙЛЧЛҮҮЛЭГЧИЙН МЭДЭЭЛЭЛ
-------------------------
+🧑‍🚀 ҮЙЛЧЛҮҮЛЭГЧИЙН МЭДЭЭЛЭЛ
+-----------------------------
 Нэр: ${data.name || 'Тодорхойгүй'}
 Байгууллага: ${data.company || 'Тодорхойгүй'}
 Имэйл: ${data.email || 'Тодорхойгүй'}
 Утас: ${data.phone || 'Тодорхойгүй'}
 
-ҮНДСЭН МЭДЭЭЛЭЛ
----------------
+🌍 ҮНДСЭН МЭДЭЭЛЭЛ
+------------------
 Вебсайтын төрөл: ${websiteTypeLabels[data.websiteType] || data.websiteType || 'Тодорхойгүй'}
-Хуудасны тоо: ${data.pages || 'Тодорхойгүй'}
 Хугацаа: ${timelineLabels[data.timeline] || data.timeline || 'Тодорхойгүй'}
 Төсөв: ${budgetLabels[data.budget] || data.budget || 'Тодорхойгүй'}
 
 ${isEcommerce ? ecommerceText : standardText}
 
-НЭМЭЛТ МЭДЭЭЛЭЛ
----------------
+📝 НЭМЭЛТ МЭДЭЭЛЭЛ
+------------------
 Жишээ вебсайт: ${data.reference || 'Тодорхойгүй'}
 
 Дэлгэрэнгүй тайлбар:
 ${data.description || 'Тодорхойгүй'}
+
+✨ © 2026 Вебсайт Захиалга ✨
   `;
 
   try {
